@@ -1,0 +1,72 @@
+<?php
+require 'connection.php';
+
+// Retrieve search parameters from the form submission
+$from_city = $_GET['from_city'];
+$to_city = $_GET['to_city'];
+$date_from = $_GET['date_from'];
+$date_to = $_GET['date_to'];
+
+// Format the date inputs for SQL
+$date_from = date('Y-m-d H:i:s', strtotime($date_from));
+$date_to = date('Y-m-d H:i:s', strtotime($date_to));
+
+// SQL query to select cars not already booked for the specified dates
+$sql = "
+    SELECT * 
+    FROM car_list c
+    WHERE NOT EXISTS (
+        SELECT 1 
+        FROM bookings b
+        WHERE b.car_id = c.id 
+        AND (
+            (b.pickup_date <= '$date_to' AND b.return_date >= '$date_from')
+        )
+    )
+";
+
+$result = $conn->query($sql);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Cars</title>
+</head>
+<body>
+    <h2>Available Cars</h2>
+    <?php
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<div class='car'>";
+            echo "<h3>" . $row['car_model'] . "</h3>";
+            echo "<p>Year: " . $row['car_year'] . "</p>";
+            echo "<p>Seats: " . $row['max_people'] . "</p>";
+            echo "<p>Type: " . $row['car_type'] . "</p>";
+            echo "<p>KMPL: " . $row['car_kmpl'] . "</p>";
+            echo "<img src='" . $row['image_path'] . "' alt='" . $row['car_model'] . "'>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p>No cars available for the selected dates.</p>";
+    }
+    ?>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
+
+
+
+
+
+
+
+
+
