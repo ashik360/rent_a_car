@@ -1,7 +1,17 @@
 <?php
 require 'connection.php';
 ?>
+<?php
+// Database connection
+$conn = new mysqli("localhost", "root", "", "rent_car");
 
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM car_list";
+$result = $conn->query($sql);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +49,71 @@ require 'connection.php';
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Open+Sans&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .featured-car-card {
+      width: 300px;
+      /* Set a fixed width for the card */
+      /*height: 450px; Set a fixed height for the card */
+      background-color: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 10px;
+    }
+
+    /* Image container */
+    .card-banner {
+      width: 100%;
+      height: 200px;
+      /* Fixed height for the image */
+      overflow: hidden;
+    }
+
+    .card-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* Ensure the image covers the entire space */
+    }
+
+    .card-content {
+      flex-grow: 1;
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+
+    /* Ensure buttons appear in the same row */
+    .btn+.btn {
+      margin-left: 10px;
+    }
+
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .featured-car-card {
+        width: 100%;
+        /* Full width on smaller screens */
+        height: auto;
+      }
+
+      .card-banner {
+        height: 150px;
+        /* Adjust image height for small screens */
+      }
+
+      .card-price-wrapper {
+        text-align: left;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -117,180 +192,92 @@ require 'connection.php';
           <div class="title-wrapper">
             <h2 class="h2 section-title">New Arrival !!</h2>
 
-            <a style="display: flex; justify-content: center; align-items: center;" href="#" class="btn user-btn"
-              aria-label="Profile">
-              <h4 style="margin-bottom: -4px;">6</h4>
-            </a>
+
           </div>
 
           <div class="cards sl-cards">
             <div class="cards-slide">
               <ul class="featured-car-list d-flex">
-                <li>
-                  <div class="featured-car-card">
-                    <figure class="card-banner my-0">
-                      <div class="card-wrapper">
-                        <div class="card-content">
-                          <h2 class="card-title">Toyota RAV4 2021</h2>
-                          <p class="card-seats">Seats: 5</p>
-                          <div class="card-buttons">
-                            <button class="btn book-now">Book Now</button>
-                            <button class="btn fav-btn">
-                              <ion-icon name="heart-outline"></ion-icon>
-                            </button>
+                <?php
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <li>
+                      <div class="featured-car-card">
+                        <figure class="card-banner my-0">
+                          <div class="card-wrapper">
+                            <div class="card-content">
+                              <h2 class="card-title"><?php echo $row['car_model']; ?></h2>
+                              <p class="card-seats">Seats: <?php echo $row['max_people']; ?></p>
+                              <div class="card-buttons">
+                                <button class="btn book-now">Book Now</button>
+                                <button class="btn fav-btn">
+                                  <ion-icon name="heart-outline"></ion-icon>
+                                </button>
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                          <img src="<?php echo $row['image_path']; ?>" alt="<?php echo $row['car_model']; ?>" loading="lazy"
+                            width="440" height="300" class="w-100" />
+                        </figure>
                       </div>
-                      <img src="./assets/images/car-1.jpg" alt="Toyota RAV4 2021" loading="lazy" width="440"
-                        height="300" class="w-100" />
-                    </figure>
-                  </div>
-                </li>
-                <!-- Repeating other cards similarly -->
-                <li>
-                  <div class="featured-car-card">
-                    <figure class="card-banner my-0">
-                      <div class="card-wrapper">
-                        <div class="card-content">
-                          <h2 class="card-title">Toyota RAV4 2021</h2>
-                          <p class="card-seats">Seats: 5</p>
-                          <div class="card-buttons">
-                            <button class="btn book-now">Book Now</button>
-                            <button class="btn fav-btn">
-                              <ion-icon name="heart-outline"></ion-icon>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <img src="./assets/images/car-2.jpg" alt="Toyota RAV4 2021" loading="lazy" width="440"
-                        height="300" class="w-100" />
-                    </figure>
-                  </div>
-                </li>
-                <li>
-                  <div class="featured-car-card">
-                    <figure class="card-banner my-0">
-                      <div class="card-wrapper">
-                        <div class="card-content">
-                          <h2 class="card-title">Toyota RAV4 2021</h2>
-                          <p class="card-seats">Seats: 5</p>
-                          <div class="card-buttons">
-                            <button class="btn book-now">Book Now</button>
-                            <button class="btn fav-btn">
-                              <ion-icon name="heart-outline"></ion-icon>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <img src="./assets/images/car-3.jpg" alt="Toyota RAV4 2021" loading="lazy" width="440"
-                        height="300" class="w-100" />
-                    </figure>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <!-- Repeat -->
-            <div class="cards-slide">
-              <ul class="featured-car-list d-flex">
-                <li>
-                  <div class="featured-car-card">
-                    <figure class="card-banner my-0">
-                      <div class="card-wrapper">
-                        <div class="card-content">
-                          <h2 class="card-title">Toyota RAV4 2021</h2>
-                          <p class="card-seats">Seats: 5</p>
-                          <div class="card-buttons">
-                            <button class="btn book-now">Book Now</button>
-                            <button class="btn fav-btn">
-                              <ion-icon name="heart-outline"></ion-icon>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <img src="./assets/images/car-4.jpg" alt="Toyota RAV4 2021" loading="lazy" width="440"
-                        height="300" class="w-100" />
-                    </figure>
-                  </div>
-                </li>
-                <!-- Repeating other cards similarly -->
-                <li>
-                  <div class="featured-car-card">
-                    <figure class="card-banner my-0">
-                      <div class="card-wrapper">
-                        <div class="card-content">
-                          <h2 class="card-title">Toyota RAV4 2021</h2>
-                          <p class="card-seats">Seats: 5</p>
-                          <div class="card-buttons">
-                            <button class="btn book-now">Book Now</button>
-                            <button class="btn fav-btn">
-                              <ion-icon name="heart-outline"></ion-icon>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <img src="./assets/images/car-5.jpg" alt="Toyota RAV4 2021" loading="lazy" width="440"
-                        height="300" class="w-100" />
-                    </figure>
-                  </div>
-                </li>
-                <li>
-                  <div class="featured-car-card">
-                    <figure class="card-banner my-0">
-                      <div class="card-wrapper">
-                        <div class="card-content">
-                          <h2 class="card-title">Toyota RAV4 2021</h2>
-                          <p class="card-seats">Seats: 5</p>
-                          <div class="card-buttons">
-                            <button class="btn book-now">Book Now</button>
-                            <button class="btn fav-btn">
-                              <ion-icon name="heart-outline"></ion-icon>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <img src="./assets/images/car-6.jpg" alt="Toyota RAV4 2021" loading="lazy" width="440"
-                        height="300" class="w-100" />
-                    </figure>
-                  </div>
-                </li>
+                    </li>
+
+                    <?php
+                  }
+                } else {
+                  echo "<p>No cars available.</p>";
+                }
+                ?>
               </ul>
             </div>
           </div>
         </div>
-        ->
 
         <!-- ==========================Featured======================== -->
-        <?php
-        $sql = "SELECT * FROM car_list";
-        $result = $conn->query($sql);
-        ?>
+        <!-- 
+        - #FEATURED CAR
+      -->
+
 
         <section class="section featured-car" id="featured-car">
           <div class="container">
             <div class="title-wrapper">
               <h2 class="h2 section-title">Featured cars</h2>
-
-              <a href="explore.php" class="featured-car-link">
-                <span>View more</span>
-                <ion-icon name="arrow-forward-outline"></ion-icon>
+              <a href="#" class="btn user-btn" aria-label="Profile">
+                <h4 style="margin-bottom: -4px;"><?php echo $result->num_rows; ?></h4>
               </a>
             </div>
+            <?php
+            require 'connection.php';
 
+            // Database connection
+            $conn = new mysqli("localhost", "root", "", "rent_car");
+
+            if ($conn->connect_error) {
+              die("Connection failed: " . $conn->connect_error);
+            }
+
+            $sql = "SELECT * FROM car_list";
+            $result = $conn->query($sql);
+
+            // Fetch all results into an array
+            $cars = $result->fetch_all(MYSQLI_ASSOC);
+            ?>
             <ul class="featured-car-list">
               <?php
-              if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
+              if (count($cars) > 0) {
+                foreach ($cars as $row) {
                   ?>
                   <li>
                     <div class="featured-car-card">
                       <figure class="card-banner">
-                        <!-- Replace with dynamic image source -->
                         <img src="<?php echo $row['image_path']; ?>" alt="<?php echo $row['car_model']; ?>" loading="lazy"
                           width="440" height="300" class="w-100" />
                       </figure>
 
-                      <div style="align-items: normal" class="card-content">
-                        <div class="card-title-wrapper">
+                      <div class="card-content">
+                        <div class="card-title-wrapper d-flex justify-content-between">
                           <h3 class="h3 card-title">
                             <a href="#"><?php echo $row['car_model']; ?></a>
                           </h3>
@@ -302,34 +289,31 @@ require 'connection.php';
                             <ion-icon name="people-outline"></ion-icon>
                             <span class="card-item-text"><?php echo $row['max_people']; ?> People</span>
                           </li>
-
                           <li class="card-list-item">
                             <ion-icon name="flash-outline"></ion-icon>
                             <span class="card-item-text"><?php echo $row['car_type']; ?></span>
                           </li>
-
                           <li class="card-list-item">
                             <ion-icon name="speedometer-outline"></ion-icon>
                             <span class="card-item-text"><?php echo $row['car_kmpl']; ?> km / 1-litre</span>
                           </li>
-
                           <li class="card-list-item">
                             <ion-icon name="hardware-chip-outline"></ion-icon>
-
                             <span class="card-item-text">Automatic</span>
                           </li>
                         </ul>
 
                         <div class="card-price-wrapper">
-                          <p class="card-price"><strong>9000 <i class="fa-solid fa-bangladeshi-taka-sign"></i></strong>/
-                            Hour
-                          </p>
-
+                          <p class="card-price"><strong><?php echo $row['costs']; ?> <i
+                                class="fa-solid fa-bangladeshi-taka-sign"></i></strong>/ Hour</p>
                           <button class="btn fav-btn" aria-label="Add to favourite list">
                             <ion-icon name="heart-outline"></ion-icon>
                           </button>
-
-                          <button class="btn">Rent now</button>
+                          <button class="btn">
+                            <a href="entryform.php?car_id=<?php echo $row['id']; ?>"
+                              style="text-decoration:none; color:white;">
+                              Rent now</a>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -343,6 +327,7 @@ require 'connection.php';
             </ul>
           </div>
         </section>
+
 
         <?php
         $conn->close();

@@ -1,13 +1,27 @@
 <?php
-// index.php
 session_start();
 
-// Retrieve phone number from session
+// Retrieve user information from session
+$userEmail = isset($_SESSION['user_email']) ? $_SESSION['user_email'] : 'Email not available';
 $userPhone = isset($_SESSION['user_phone']) ? $_SESSION['user_phone'] : 'No phone number available';
 
-// Check if the phone number is valid
-if ($userPhone == 'No phone number available') {
-    die("Phone number is missing. Please log in again.");
+// Check if the email is valid (email is required for access)
+if ($userEmail == 'Email not available') {
+    die("Access denied. Please verify your email.");
+}
+
+// Fetch the user's phone number from the database
+include 'connection.php';
+$stmt = $conn->prepare("SELECT phone FROM verified_user WHERE email = ?");
+$stmt->bind_param("s", $userEmail);
+$stmt->execute();
+$stmt->bind_result($userPhone);
+$stmt->fetch();
+$stmt->close();
+
+// If no phone is found in the database, set a default message
+if (empty($userPhone)) {
+    $userPhone = 'N/A';
 }
 ?>
 
@@ -26,71 +40,21 @@ if ($userPhone == 'No phone number available') {
 
         .card {
             border: none;
-
             position: relative;
             overflow: hidden;
             border-radius: 8px;
             cursor: pointer;
         }
 
-        /* For centering the profile image */
         .card img {
             display: block;
             margin: 0 auto;
             border-radius: 50%;
         }
 
-
-        .card:before {
-
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background-color: #E1BEE7;
-            transform: scaleY(1);
-            transition: all 0.5s;
-            transform-origin: bottom
-        }
-
-        .card:after {
-
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background-color: #8E24AA;
-            transform: scaleY(0);
-            transition: all 0.5s;
-            transform-origin: bottom
-        }
-
-        .card:hover::after {
-            transform: scaleY(1);
-        }
-
-
         .fonts {
             font-size: 11px;
         }
-
-        .social-list {
-            display: flex;
-            list-style: none;
-            justify-content: center;
-            padding: 0;
-        }
-
-        .social-list li {
-            padding: 10px;
-            color: #8E24AA;
-            font-size: 19px;
-        }
-
 
         .buttons button:nth-child(1) {
             border: 1px solid #8E24AA !important;
@@ -128,8 +92,37 @@ if ($userPhone == 'No phone number available') {
 
                     <div class="text-center mt-3">
                         <span class="bg-secondary p-1 px-4 rounded text-white">User Profile</span>
-                        <h3 class="mt-2 mb-0"><strong>User:</strong> <span
-                                id="user-phone"><?php echo $userPhone; ?></span></h3>
+                        <h3 class="mt-2 mb-0"><strong>Email:</strong> <span id="user-email"><?php echo $userEmail; ?></span></h3>
+                        
+                        <!-- Display phone number or N/A if unavailable -->
+                        <h3 class="mt-2 mb-0"><strong>Phone:</strong> <span id="user-phone"><?php echo $userPhone; ?></span>
+                        <?php if($userPhone == 'N/A'): ?>
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#phoneModal"><i class="fa fa-pencil"></i></button>
+                        <?php endif; ?>
+                        </h3>
+
+                        <!-- Modal for phone number update -->
+                        <div class="modal fade" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="phoneModalLabel">Assign Phone Number</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="phone-form">
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">Phone Number</label>
+                                                <input type="text" class="form-control" id="phone" name="phone" required>
+                                            </div>
+                                            <input type="hidden" id="email" name="email" value="<?php echo $userEmail; ?>">
+                                            <button type="submit" class="btn btn-primary">Save Phone Number</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <span>Client</span>
 
                         <!-- Booking Table -->
@@ -169,33 +162,28 @@ if ($userPhone == 'No phone number available') {
 
                                         // Display the bookings
                                         while ($row = $result->fetch_assoc()) {
-                                            // Determine the button class based on the status
                                             $statusClass = ($row['status'] == 'Pending') ? 'btn-outline-secondary' : 'btn-outline-success';
 
                                             echo "<tr>";
-                                            echo "<td>" . $counter . "</td>";  // Display the row number
+                                            echo "<td>" . $counter . "</td>";
                                             echo "<td>" . '2024' . $row['car_id'] . "</td>";
                                             echo "<td>{$row['pickup_date']}</td>";
                                             echo "<td>{$row['return_date']}</td>";
-
-                                            // Echo the status with dynamic class
                                             echo "<td><button type='button' class='btn {$statusClass}' disabled>{$row['status']}</button></td>";
 
-                                            // Check if the status is Pending
                                             if ($row['status'] == "Pending") {
                                                 echo '<td class="d-flex justify-content-evenly">
-                    <button type="button" class="btn btn-primary">Pay Now</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                  </td>';
+                                                        <button type="button" class="btn btn-primary">Pay Now</button>
+                                                        <button type="button" class="btn btn-danger">Delete</button>
+                                                      </td>';
                                             } else {
                                                 echo '<td class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-danger">Delete</button>
-                  </td>';
+                                                        <button type="button" class="btn btn-danger">Delete</button>
+                                                      </td>';
                                             }
 
                                             echo "</tr>";
 
-                                            // Increment the counter after each iteration
                                             $counter++;
                                         }
                                     } else {
@@ -204,14 +192,18 @@ if ($userPhone == 'No phone number available') {
 
                                     $stmt->close();
                                     ?>
-
                                 </tbody>
                             </table>
                         </div>
                         <hr>
-                        <a href="logout2.php">
-                            <button type="button" class="btn btn-danger">Log Out</button>
-                        </a>
+                        <div class="d-flex justify-content-center">
+                            <a href="index.php" class="mx-2">
+                                <button type="button" class="btn btn-secondary">Back</button>
+                            </a>
+                            <a href="logout2.php" class="mx-2">
+                                <button type="button" class="btn btn-danger">Log Out</button>
+                            </a>
+                        </div>
                         <hr>
                     </div>
                 </div>
@@ -219,10 +211,37 @@ if ($userPhone == 'No phone number available') {
         </div>
     </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+    $("#phone-form").on("submit", function(e) {
+        e.preventDefault();
+
+        var phone = $("#phone").val();
+        var email = $("#email").val();
+
+        $.ajax({
+            url: 'update_phone.php',
+            method: 'POST',
+            data: { email: email, phone: phone },
+            success: function(response) {
+                console.log(response); // Log the response from the server to the console for debugging
+                if (response === 'success') {
+                    alert("Phone number updated successfully!");
+                    location.reload(); // Reload to reflect the new phone number
+                } else {
+                    alert("Failed to update phone number: " + response); // Show the error message
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("AJAX error: " + error); // Alert in case of AJAX error
+            }
+        });
+    });
+});
+
+    </script>
 </body>
 
 </html>

@@ -136,93 +136,94 @@ if (!isset($_SESSION['username'])) {
             <div class="row">
               <div class="container-fluid">
                 <div class="row">
-                  <div class="col-md-2 admin-menus position-fixed sticky-top mt-9" style="height: 100vh; overflow-y: auto;">
-                    <h2 class="mt-2 mb-4" style="color: var(--white)">Menu</h2>
-                    <a class="" href="dash_admin.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Dashboard </span>
-                          </div>
-                          <div class="col-md-2"></div>
+                <div class="col-md-2 admin-menus position-fixed sticky-top mt-9"
+                  style="height: 100vh; overflow-y: auto;">
+                  <h2 class="mt-2 mb-4" style="color: var(--white)">Menu</h2>
+                  <a class="" href="dash_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
+                          <span class="admin-list">Dashboard </span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="cars_admin.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Car Management</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="#">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-car me-1"></i></span>
+                          <span class="admin-list">Car Management</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="#">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Manage Categories</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="categ_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-layer-group me-1"></i></span>
+                          <span class="admin-list">Manage Categories</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="book_admin.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">View Bookings</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="book_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-rectangle-list me-1"></i></span>
+                          <span class="admin-list">View Bookings</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="reg_users.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Registered Users</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="reg_users.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-users-gear me-1"></i></span>
+                          <span class="admin-list">Registered Users</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="#">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Drivers</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="drivers_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-user-gear me-1"></i></span>
+                          <span class="admin-list">Drivers</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="#">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Settings</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="#">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-gear me-1"></i></span>
+                          <span class="admin-list">Settings</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                  </div>
+                    </div>
+                  </a>
+                </div>
                   <div class="col-md-10 offset-md-2">
                     <div class="card">
                       <div class="card-header">

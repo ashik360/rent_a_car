@@ -119,11 +119,11 @@ if (!isset($_SESSION['username'])) {
         <label for="car_model" class="form-label">Car Model</label>
         <input type="text" class="form-control" id="car_model" name="car_model" required>
     </div>
-    <!-- Car licence -->
+    <!-- Car licence
     <div class="mb-3">
         <label for="car_licence" class="form-label">Car Model</label>
         <input type="text" class="form-control" id="car_licence" name="car_licence" required>
-    </div>
+    </div> -->
     <!-- Car Year -->
     <div class="mb-3">
         <label for="car_year" class="form-label">Car Year</label>

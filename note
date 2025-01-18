@@ -1,0 +1,221 @@
+<?php
+require 'connection.php';
+
+// Retrieve search parameters from the form submission
+$from_city = $_GET['from_city'];
+$to_city = $_GET['to_city'];
+$date_from = $_GET['date_from'];
+$date_to = $_GET['date_to'];
+
+// Format the date inputs for SQL
+$date_from = date('Y-m-d H:i:s', strtotime($date_from));
+$date_to = date('Y-m-d H:i:s', strtotime($date_to));
+
+// SQL query to select cars not already booked for the specified dates
+$sql = "
+    SELECT * 
+    FROM car_list c
+    WHERE NOT EXISTS (
+        SELECT 1 
+        FROM bookings b
+        WHERE b.car_id = c.id 
+        AND (
+            (b.pickup_date <= '$date_to' AND b.return_date >= '$date_from')
+        )
+    )
+";
+
+$result = $conn->query($sql);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Cars</title>
+</head>
+<body>
+    <h2>Available Cars</h2>
+    <?php
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<div class='car'>";
+            echo "<h3>" . $row['car_model'] . "</h3>";
+            echo "<p>Year: " . $row['car_year'] . "</p>";
+            echo "<p>Seats: " . $row['max_people'] . "</p>";
+            echo "<p>Type: " . $row['car_type'] . "</p>";
+            echo "<p>KMPL: " . $row['car_kmpl'] . "</p>";
+            echo "<img src='" . $row['image_path'] . "' alt='" . $row['car_model'] . "'>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p>No cars available for the selected dates.</p>";
+    }
+    ?>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
+
+
+
+
+
+
+<section style="margin-top: 6vh;" class="section new-arrival featured-car" id="featured-car">
+        <div class="container">
+          <div class="title-wrapper">
+            <h2 class="h2 section-title">New Arrival !!</h2>
+
+
+          </div>
+
+          <div class="cards sl-cards">
+            <div class="cards-slide">
+              <ul class="featured-car-list d-flex">
+                <?php
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <li>
+                      <div class="featured-car-card">
+                        <figure class="card-banner my-0">
+                          <div class="card-wrapper">
+                            <div class="card-content">
+                              <h2 class="card-title"><?php echo $row['car_model']; ?></h2>
+                              <p class="card-seats">Seats: <?php echo $row['max_people']; ?></p>
+                              <div class="card-buttons">
+                                <button class="btn book-now">Book Now</button>
+                                <button class="btn fav-btn">
+                                  <ion-icon name="heart-outline"></ion-icon>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <img src="<?php echo $row['image_path']; ?>" alt="<?php echo $row['car_model']; ?>" loading="lazy"
+                            width="440" height="300" class="w-100" />
+                        </figure>
+                      </div>
+                    </li>
+                    
+                    <?php
+                  }
+                } else {
+                  echo "<p>No cars available.</p>";
+                }
+                ?>
+              </ul>
+            </div>
+            <div class="cards-slide">
+              <ul class="featured-car-list d-flex">
+                <?php
+                require 'connection.php';
+
+                if ($conn->connect_error) {
+                  die("Connection failed: " . $conn->connect_error);
+                }
+                
+                $sql = "SELECT * FROM car_list";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <li>
+                      <div class="featured-car-card">
+                        <figure class="card-banner my-0">
+                          <div class="card-wrapper">
+                            <div class="card-content">
+                              <h2 class="card-title"><?php echo $row['car_model']; ?></h2>
+                              <p class="card-seats">Seats: <?php echo $row['max_people']; ?></p>
+                              <div class="card-buttons">
+                                <button class="btn book-now">Book Now</button>
+                                <button class="btn fav-btn">
+                                  <ion-icon name="heart-outline"></ion-icon>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <img src="<?php echo $row['image_path']; ?>" alt="<?php echo $row['car_model']; ?>" loading="lazy"
+                            width="440" height="300" class="w-100" />
+                        </figure>
+                      </div>
+                    </li>
+                    
+                    <?php
+                  }
+                } else {
+                  echo "<p>No cars available.</p>";
+                }
+                ?>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+
+        <style>
+
+.featured-car-card {
+  width: 300px; /* Set a fixed width for the card */
+   /*height: 450px; Set a fixed height for the card */
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 10px;
+}
+
+/* Image container */
+.card-banner {
+  width: 100%;
+  height: 200px; /* Fixed height for the image */
+  overflow: hidden;
+}
+
+.card-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the entire space */
+}
+
+.card-content {
+  flex-grow: 1;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+/* Ensure buttons appear in the same row */
+.btn + .btn {
+  margin-left: 10px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .featured-car-card {
+    width: 100%; /* Full width on smaller screens */
+    height: auto;
+  }
+
+  .card-banner {
+    height: 150px; /* Adjust image height for small screens */
+  }
+
+  .card-price-wrapper {
+    text-align: left;
+  }
+}
+</style>
+
+
+

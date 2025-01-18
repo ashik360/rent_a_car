@@ -136,99 +136,100 @@ if (!isset($_SESSION['username'])) {
             <div class="row">
               <div class="container-fluid">
                 <div class="row">
-                  <div class="col-md-2 admin-menus position-fixed sticky-top mt-9" style="height: 100vh; overflow-y: auto;">
-                    <h2 class="mt-2 mb-4" style="color: var(--white)">Menu</h2>
-                    <a class="" href="dash_admin.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Dashboard </span>
-                          </div>
-                          <div class="col-md-2"></div>
+                <div class="col-md-2 admin-menus position-fixed sticky-top mt-9"
+                  style="height: 100vh; overflow-y: auto;">
+                  <h2 class="mt-2 mb-4" style="color: var(--white)">Menu</h2>
+                  <a class="" href="dash_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
+                          <span class="admin-list">Dashboard </span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="cars_admin.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Car Management</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="cars_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-car me-1"></i></span>
+                          <span class="admin-list">Car Management</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="categ_admin.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Manage Categories</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="categ_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-layer-group me-1"></i></span>
+                          <span class="admin-list">Manage Categories</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="book_admin.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">View Bookings</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="book_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-rectangle-list me-1"></i></span>
+                          <span class="admin-list">View Bookings</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="reg_users.php">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Registered Users</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="reg_users.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-users-gear me-1"></i></span>
+                          <span class="admin-list">Registered Users</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="#">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Drivers</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="drivers_admin.php">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-user-gear me-1"></i></span>
+                          <span class="admin-list">Drivers</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                    <a class="" href="#">
-                      <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
-                        <div class="row g-0">
-                          <div class="col-md-2"></div>
-                          <div class="col-md-8 d-flex justify-content-start align-items-center">
-                            <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
-                            <span class="admin-list">Settings</span>
-                          </div>
-                          <div class="col-md-2"></div>
+                    </div>
+                  </a>
+                  <a class="" href="#">
+                    <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
+                      <div class="row g-0">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 d-flex justify-content-start align-items-center">
+                          <span><i class="fa-solid fa-gear me-1"></i></span>
+                          <span class="admin-list">Settings</span>
                         </div>
+                        <div class="col-md-2"></div>
                       </div>
-                    </a>
-                  </div>
+                    </div>
+                  </a>
+                </div>
                   <div class="col-md-10 offset-md-2">
                     <div class="card">
                       <div class="card-header">
                         <div class="row">
                           <div class="col-md-3 fs-3 d-flex flex-start">
-                            Available Drivers
+                            Driver Details
                           </div>
                           <div class="col-md-6"></div>
                           <div class="col-md-3 d-flex justify-content-end">
@@ -247,6 +248,21 @@ if (!isset($_SESSION['username'])) {
                           </div>
                         </div>
                       </div>
+                      <div class="card-header">
+                      <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3 d-flex justify-content-end">
+                          <a href="addcar.php">
+                            <button class="btn-white rounded" type="button">
+                              <i class="fa-solid fa-plus"></i>
+                              Add A New Driver
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                       <div class="table-top my-3 d-flex">
                         <div class="table-top-left d-inline-flex">
                           <span>Showing Entries</span>
@@ -262,32 +278,57 @@ if (!isset($_SESSION['username'])) {
                           <thead>
                             <tr>
                               <th>SL.</th>
-                              <th>Car Model</th>
-                              <th>Seats</th>
-                              <th>Elements</th>
-                              <th>Elements</th>
+                              <th>Name</th>
+                              <th>Phone</th>
+                              <th>User</th>
+                              <th>Credentials</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr>
-                              <td>1.</td>
-                              <td>Robin</td>
-                              <td>Lorem ipsum dolor sit amet consectetur.</td>
-                              <td>Lorem.</td>
-                              <td>
-                                <!-- Example single danger button -->
-                                <div class="btn-group">
-                                  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Action
-                                  </button>
-                                  <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item dp-edit" href="#"><i class="fa-solid fa-pen-to-square px-1"></i>Edit</a></li>
-                                    <li><a class="dropdown-item dp-delete" href="#"><i class="fa-solid fa-trash px-1"></i>Delete</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
+                          <?php
+                          // Database connection settings
+                          require 'connection.php';
+
+                          // SQL query to retrieve all cars
+                          $sql = "SELECT * FROM drivers";
+                          $result = $conn->query($sql);
+                          $number_of_cars = $result->num_rows;
+                          if ($result === false) {
+                            // If query fails, display error message
+                            echo "Error: " . $conn->error;
+                          } else {
+                            if ($result->num_rows > 0) {
+                              while ($row = $result->fetch_assoc()) { ?>
+                                <tr>
+                                  <td><strong><?php echo $row['id']; ?></strong></td> <!-- ID in bold -->
+                                  <td><?php echo $row['name']; ?></td>
+                                  <td><?php echo $row['driver_phone']; ?></td>
+                                  <td><?php echo $row['username']; ?></td>
+                                  <td><?php echo $row['password']; ?></td>
+                                  <td>
+                                    <!-- Action buttons -->
+                                    <div class="btn-group">
+                                      <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Action
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item dp-edit" href="#"><i
+                                              class="fa-solid fa-pen-to-square px-1"></i>Edit</a></li>
+                                      </ul>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <?php
+                              }
+                            } else {
+                              echo '<p>No car details found.</p>';
+                            }
+                          }
+
+                          $conn->close();
+                          ?>
+                        </tbody>
                         </table>
                       </div>
                     </div>

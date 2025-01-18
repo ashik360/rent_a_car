@@ -1,13 +1,130 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rent Your Favourite Car</title>
 
     <?php include "dependency/dependency_top.php" ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    <style>
+        .demo {
+            background: #f8f8f8;
+        }
+
+        .testimonial {
+            margin: 0 20px 40px;
+        }
+
+        .testimonial .testimonial-content {
+            padding: 35px 25px 35px 50px;
+            margin-bottom: 35px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .testimonial .testimonial-content:after {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            position: absolute;
+            bottom: -10px;
+            left: 22px;
+            transform: rotate(45deg);
+        }
+
+        .testimonial-content .testimonial-icon {
+            width: 50px;
+            height: 45px;
+            background: hsl(204, 91%, 53%);
+            text-align: center;
+            font-size: 22px;
+            color: #fff;
+            line-height: 42px;
+            position: absolute;
+            top: 37px;
+            left: -19px;
+        }
+
+        .testimonial-content .testimonial-icon:before {
+            content: "";
+            border-bottom: 16px solid hsl(204, 91%, 53%);
+            ;
+            border-left: 18px solid transparent;
+            position: absolute;
+            top: -16px;
+            left: 1px;
+        }
+
+        .testimonial .description {
+            font-size: 15px;
+            font-style: italic;
+            color: #8a8a8a;
+            line-height: 23px;
+            margin: 0;
+        }
+
+        .testimonial .title {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: #525252;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            margin: 0 0 5px 0;
+        }
+
+        .testimonial .post {
+            display: block;
+            font-size: 14px;
+            color: hsl(204, 91%, 53%);
+        }
+
+        .owl-theme .owl-controls {
+            margin-top: 20px;
+        }
+
+        .owl-theme .owl-controls .owl-page span {
+            background: #ccc;
+            opacity: 1;
+            transition: all 0.4s ease 0s;
+        }
+
+        .owl-theme .owl-controls .owl-page.active span,
+        .owl-theme .owl-controls.clickable .owl-page:hover span {
+            background: #ff4242;
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .testimonial-profile {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .testimonial .title,
+        .testimonial .post {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,7 +152,7 @@
                     </li>
 
                     <li>
-                        <a href="#" class="navbar-link" data-nav-link>About us</a>
+                        <a href="about_us.php" class="navbar-link" data-nav-link>About us</a>
                     </li>
 
                     <li>
@@ -118,89 +235,76 @@
                     </div>
 
 
-                    <form action="" class="hero-form">
-                        <div class="input-wrapper">
-                            <label for="input-1" class="input-label">From</label>
+                    <form action="search_result.php" method="GET" class="hero-form">
+                        <div class="d-flex flex-column justify-content-between align-items-between">
+                            <div class="row">
+                                <!-- From City -->
+                                <div class="input-wrapper">
+                                    <label for="inputFromCity" class="input-label">From</label>
+                                    <input type="text" name="from_city" class="form-control input-field"
+                                        id="inputFromCity" list="cities" placeholder="Dhaka" required>
+                                    <!-- Datalist for City Suggestions -->
+                                    <datalist id="cities">
+                                        <?php
+                                        // Connect to the database
+                                        include "connection.php";
 
-                            <input type="text" name="from" class="form-control" id="inputFromCity" list="cities"
-                                placeholder="Dhaka" required>
-                            <datalist id="cities">
-                                <option value="Dhaka">
-                                <option value="Chattogram">
-                                <option value="Sylhet">
-                                <option value="Khulna">
-                                <option value="Rajshahi">
-                                <option value="Dinajpur">
-                                <option value="Mirzapur">
-                                <option value="Mymensingh">
-                                <option value="Narayanganj">
-                                <option value="Gazipur">
-                                <option value="Gopalganj">
-                                <option value="Tangail">
-                                <option value="Bhairab Bazar">
-                                <option value="Faridpur">
-                                <option value="Chittagong">
-                                <option value="Cumilla">
-                                <option value="Brahmanbaria">
-                                <option value="Feni">
-                                <option value="Chandpur">
-                                <option value="Laksam">
-                                <option value="Akhaura">
-                                <option value="Nabinagar">
-                            </datalist>
+                                        // Check connection done
+                                        
+
+                                        // Fetch city names
+                                        $sql = "SELECT name FROM cities ORDER BY name ASC";
+                                        $result = $conn->query($sql);
+
+                                        // Populate datalist
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<option value='" . htmlspecialchars($row['name']) . "'>";
+                                            }
+                                        }
+
+                                        // Close connection
+                                        $conn->close();
+                                        ?>
+                                    </datalist>
+                                </div>
+
+                                <!-- To City -->
+                                <div class="input-wrapper">
+                                    <label for="inputToCity" class="input-label">To</label>
+                                    <input type="text" name="to_city" class="form-control input-field" id="inputToCity"
+                                        list="cities" placeholder="Gazipur" required>
+                                    <!-- Same datalist as above -->
+                                    <datalist id="cities">
+                                        <?php
+                                        // for suggestions
+                                        ?>
+                                    </datalist>
+                                </div>
+                            </div>
+
+                            <div class="row d-flex flex-row flex-nowrap">
+                                <div class="input-wrapper">
+                                    <label for="dateTimeFrom" class="input-label">Date From</label>
+                                    <input type="datetime-local" name="date_from" class="form-control input-field"
+                                        id="dateTimeFrom" required>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label for="dateTimeTo" class="input-label">Date To</label>
+                                    <input type="datetime-local" name="date_to" class="form-control input-field"
+                                        id="dateTimeTo" required>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="input-wrapper">
-                            <label for="input-2" class="input-label">To</label>
-
-                            <input type="text" name="from" class="form-control" id="inputFromCity" list="cities"
-                                placeholder="Gazipur" required>
-                            <datalist id="cities">
-                                <option value="Dhaka">
-                                <option value="Chattogram">
-                                <option value="Sylhet">
-                                <option value="Khulna">
-                                <option value="Rajshahi">
-                                <option value="Dinajpur">
-                                <option value="Mirzapur">
-                                <option value="Mymensingh">
-                                <option value="Narayanganj">
-                                <option value="Gazipur">
-                                <option value="Gopalganj">
-                                <option value="Tangail">
-                                <option value="Bhairab Bazar">
-                                <option value="Faridpur">
-                                <option value="Chittagong">
-                                <option value="Cumilla">
-                                <option value="Brahmanbaria">
-                                <option value="Feni">
-                                <option value="Chandpur">
-                                <option value="Laksam">
-                                <option value="Akhaura">
-                                <option value="Nabinagar">
-                            </datalist>
-                        </div>
-
-                        <div class="input-wrapper">
-                            <label for="input-3" class="input-label">Date From</label>
-
-                            <input type="datetime-local" name="from" class="form-control" id="dateTimeFrom" list="time-days"
-                                placeholder="10" required>
-                        </div>
-
-                        <div class="input-wrapper">
-                            <label for="input-3" class="input-label">Date To</label>
-
-                            <input type="datetime-local" name="from" class="form-control" id="dateTimeTO" list="time-days"
-                                placeholder="10" required>
-                        </div>
-
-                        <button type="submit" class="btn">Search</button>
+                        <button type="submit" class="btn style-btn">Search</button>
                     </form>
-                    
+
+
+
+
                     <p class="hero-text mt-5">
-                            Drive Your Dreams with Our Reliable Rentals
-                        </p>
+                        Drive Your Dreams with Our Reliable Rentals
+                    </p>
                 </div>
             </section>
 
@@ -215,7 +319,7 @@
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            $sql = "SELECT * FROM car_list";
+            $sql = "SELECT * FROM car_list LIMIT 6";
             $result = $conn->query($sql);
             ?>
 
@@ -244,7 +348,7 @@
                                         </figure>
 
                                         <div style="align-items: normal" class="card-content">
-                                            <div class="card-title-wrapper">
+                                            <div class="card-title-wrapper d-flex justify-content-between">
                                                 <h3 class="h3 card-title">
                                                     <a href="#"><?php echo $row['car_model']; ?></a>
                                                 </h3>
@@ -277,7 +381,7 @@
                                             </ul>
 
                                             <div class="card-price-wrapper">
-                                                <p class="card-price"><strong>9000 <i
+                                                <p class="card-price"><strong><?php echo $row['costs']; ?> <i
                                                             class="fa-solid fa-bangladeshi-taka-sign"></i></strong>/ Hour
                                                 </p>
 
@@ -380,6 +484,98 @@
                     </ul>
                 </div>
             </section>
+
+            <!-- 
+        - #Testimonial
+      -->
+
+            <section>
+                <div class="container">
+                    <h2 class="h2 section-title">Customer Feedback</h2>
+                </div>
+                <div class="demo">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="testimonial-slider" class="owl-carousel">
+                                    <div class="testimonial">
+                                        <div class="testimonial-content">
+                                            <div class="testimonial-icon">
+                                                <i class="fa fa-quote-left"></i>
+                                            </div>
+                                            <p class="description">
+                                                I had a fantastic experience renting a car! The service was excellent,
+                                                and the car was in perfect condition.
+                                            </p>
+                                        </div>
+                                        <div class="testimonial-profile">
+                                            <img style="width: 50px" src="assets/images/user-icon.png" alt="Profile Pic"
+                                                class="profile-pic">
+                                            <h3 class="title">Rahman</h3>
+                                            <span class="post">Web Developer</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="testimonial">
+                                        <div class="testimonial-content">
+                                            <div class="testimonial-icon">
+                                                <i class="fa fa-quote-left"></i>
+                                            </div>
+                                            <p class="description">
+                                                The car rental service was top-notch! The staff was very helpful, and
+                                                everything was seamless. Highly recommend!
+                                            </p>
+                                        </div>
+                                        <div class="testimonial-profile">
+                                            <img style="width: 50px" src="assets/images/user-icon.png" alt="Profile Pic"
+                                                class="profile-pic">
+                                            <h3 class="title">Ayesha</h3>
+                                            <span class="post">Web Designer</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="testimonial">
+                                        <div class="testimonial-content">
+                                            <div class="testimonial-icon">
+                                                <i class="fa fa-quote-left"></i>
+                                            </div>
+                                            <p class="description">
+                                                Very impressed with the rental service. The car was spotless and the
+                                                process was super quick and easy.
+                                            </p>
+                                        </div>
+                                        <div class="testimonial-profile">
+                                            <img style="width: 50px" src="assets/images/user-icon.png" alt="Profile Pic"
+                                                class="profile-pic">
+                                            <h3 class="title">Meherun</h3>
+                                            <span class="post">Graphic Designer</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="testimonial">
+                                        <div class="testimonial-content">
+                                            <div class="testimonial-icon">
+                                                <i class="fa fa-quote-left"></i>
+                                            </div>
+                                            <p class="description">
+                                                Great service! The car was perfect for my trip and the customer support
+                                                team was outstanding. I will definitely rent again.
+                                            </p>
+                                        </div>
+                                        <div class="testimonial-profile">
+                                            <img style="width: 50px" src="assets/images/user-icon.png" alt="Profile Pic"
+                                                class="profile-pic">
+                                            <h3 class="title">Karim</h3>
+                                            <span class="post">Software Engineer</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
 
             <!-- 
         - #BLOG
@@ -599,6 +795,9 @@
                     <li>
                         <a href="login1.php" class="footer-link">Login</a>
                     </li>
+                    <li>
+                        <a href="driver_login.php" class="footer-link">Driver Login</a>
+                    </li>
                 </ul>
 
                 <ul class="footer-list">
@@ -707,6 +906,43 @@
             </div>
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#testimonial-slider").owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: false,  // Navigation arrows are hidden based on your configuration
+                pagination: true,  // Show pagination dots
+                slideSpeed: 1000,  // Slide transition speed
+                autoplay: true,  // Enable autoplay
+                autoplayTimeout: 5000,  // Autoplay interval (in milliseconds)
+                autoplayHoverPause: true,  // Pause autoplay on hover
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    650: {
+                        items: 1  // Custom for mobile
+                    },
+                    768: {
+                        items: 2  // Custom for tablet
+                    },
+                    980: {
+                        items: 2  // Custom for small desktop
+                    },
+                    1000: {
+                        items: 3  // Custom for large desktop
+                    }
+                }
+            });
+        });
+
+
+    </script>
+
 
     <?php include 'dependency/dependency_bottom.php' ?>
 </body>

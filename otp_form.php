@@ -1,3 +1,13 @@
+<?php 
+session_start();
+
+// Check if user is already logged in
+if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
+    header('Location: client_area.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +27,7 @@
       background-color: #ebecf0;
     }
     .otp-letter-input {
-      max-width: 100%;
+      width: 100%;
       height: 60px;
       border: 1px solid #198754;
       border-radius: 10px;
@@ -50,14 +60,14 @@
       <div class="col-md-5 mt-5">
         <div class="bg-white p-5 rounded-3 shadow-sm border">
           <div>
-            <form action="otp_verification.php" method="POST">
+            <form action="send_mail.php" method="POST">
               <p class="text-center text-success" style="font-size: 5.5rem">
                 <i class="fa-solid fa-envelope"></i>
               </p>
               <p class="text-center h5">Please enter your email</p>
               <div class="row pt-4 pb-2">
                 <div class="col-12 text-center">
-                  <input required class="otp-letter-input" type="email" name="email" placeholder="Enter your email">
+                <input required class="otp-letter-input" type="email" name="email" placeholder="Enter your email-Only Gmail">
                 </div>
               </div>
               <p class="text-center h5">Or, Continue with</p>
@@ -74,7 +84,7 @@
               </p>
               <div class="row pt-3">
                 <div class="col-12">
-                  <button type="submit" class="btn btn-success w-100 fs-5">Continue</button>
+                <button type="submit" class="btn btn-success w-100 fs-5">Continue</button>
                 </div>
               </div>
             </form>

@@ -49,3 +49,23 @@ function copyBooking(id) {
 function deleteBooking(id) {
   alert('Delete booking ID: ' + id);
 }
+
+
+document.querySelectorAll('input[list="cities"]').forEach(input => {
+  input.addEventListener('input', function () {
+      const query = this.value;
+      if (query.length > 1) { // Fetch suggestions after 2 characters
+          fetch(`fetch_cities.php?query=${encodeURIComponent(query)}`)
+              .then(response => response.json())
+              .then(data => {
+                  const dataList = this.list;
+                  dataList.innerHTML = ''; // Clear previous options
+                  data.forEach(city => {
+                      const option = document.createElement('option');
+                      option.value = city;
+                      dataList.appendChild(option);
+                  });
+              });
+      }
+  });
+});

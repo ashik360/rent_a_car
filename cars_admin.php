@@ -10,6 +10,14 @@ if (!isset($_SESSION['username'])) {
   header('location:login1.php');
   exit();
 }
+
+// Database connection settings
+require 'connection.php';
+
+// SQL query to retrieve all cars
+$sql = "SELECT * FROM car_list";
+$result = $conn->query($sql);
+$number_of_cars = $result->num_rows;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +120,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="row g-0">
                         <div class="col-md-2"></div>
                         <div class="col-md-8 d-flex justify-content-start align-items-center">
-                          <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
+                          <span><i class="fa-solid fa-car me-1"></i></span>
                           <span class="admin-list">Car Management</span>
                         </div>
                         <div class="col-md-2"></div>
@@ -124,7 +132,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="row g-0">
                         <div class="col-md-2"></div>
                         <div class="col-md-8 d-flex justify-content-start align-items-center">
-                          <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
+                          <span><i class="fa-solid fa-layer-group me-1"></i></span>
                           <span class="admin-list">Manage Categories</span>
                         </div>
                         <div class="col-md-2"></div>
@@ -136,7 +144,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="row g-0">
                         <div class="col-md-2"></div>
                         <div class="col-md-8 d-flex justify-content-start align-items-center">
-                          <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
+                          <span><i class="fa-solid fa-rectangle-list me-1"></i></span>
                           <span class="admin-list">View Bookings</span>
                         </div>
                         <div class="col-md-2"></div>
@@ -148,19 +156,19 @@ if (!isset($_SESSION['username'])) {
                       <div class="row g-0">
                         <div class="col-md-2"></div>
                         <div class="col-md-8 d-flex justify-content-start align-items-center">
-                          <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
+                          <span><i class="fa-solid fa-users-gear me-1"></i></span>
                           <span class="admin-list">Registered Users</span>
                         </div>
                         <div class="col-md-2"></div>
                       </div>
                     </div>
                   </a>
-                  <a class="" href="#">
+                  <a class="" href="drivers_admin.php">
                     <div class="card mb-3 mt-2 c-hover" style="max-width: 540px; padding: 0.8rem 0">
                       <div class="row g-0">
                         <div class="col-md-2"></div>
                         <div class="col-md-8 d-flex justify-content-start align-items-center">
-                          <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
+                          <span><i class="fa-solid fa-user-gear me-1"></i></span>
                           <span class="admin-list">Drivers</span>
                         </div>
                         <div class="col-md-2"></div>
@@ -172,7 +180,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="row g-0">
                         <div class="col-md-2"></div>
                         <div class="col-md-8 d-flex justify-content-start align-items-center">
-                          <span><i class="nav-icon fas fa-tachometer-alt me-1"></i></span>
+                          <span><i class="fa-solid fa-gear me-1"></i></span>
                           <span class="admin-list">Settings</span>
                         </div>
                         <div class="col-md-2"></div>
@@ -224,7 +232,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="table-top my-3 d-flex">
                       <div class="table-top-left d-inline-flex">
                         <span>Showing Entries:</span>
-                        <input type="number" name="" id="" />
+                        <input type="number" name="" id="" value="<?php echo $result->num_rows?>" />
                       </div>
                       <div class="table-top-right d-inline-flex justify-content-end">
                         <span>Search:</span>
@@ -232,67 +240,71 @@ if (!isset($_SESSION['username'])) {
                       </div>
                     </div>
                     <div class="table-elements">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Model</th>
-        <th>Car year</th>
-        <th>Max people</th>
-        <th>Km/Litre</th>
-        <th>Status</th>
-        <th>Costs</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      // Database connection settings
-      require 'connection.php';
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Model</th>
+                            <th>Car year</th>
+                            <th>Max people</th>
+                            <th>Km/Litre</th>
+                            <th>Status</th>
+                            <th>Costs</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                          
+                          if ($result === false) {
+                            // If query fails, display error message
+                            echo "Error: " . $conn->error;
+                          } else {
+                            if ($result->num_rows > 0) {
+                              while ($row = $result->fetch_assoc()) { ?>
+                                <tr>
+                                  <td><strong><?php echo $row['id']; ?></strong></td> <!-- ID in bold -->
+                                  <td><?php echo $row['car_model']; ?></td>
+                                  <td><?php echo $row['car_year']; ?></td>
+                                  <td><?php echo $row['max_people']; ?></td>
+                                  <td><?php echo $row['car_kmpl']; ?></td>
+                                  <td><?php echo $row['status']; ?></td>
+                                  <td><?php echo $row['costs']; ?></td>
+                                  <td>
+                                    <!-- Action buttons -->
+                                    <div class="btn-group">
+                                      <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Action
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                        <li>
+                                          <a class="dropdown-item dp-edit" href="edit_car.php?id=<?php echo $row['id']; ?>">
+                                            <i class="fa-solid fa-pen-to-square px-1"></i>Edit
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <a class="dropdown-item dp-delete" href="#" data-id="<?php echo $row['id']; ?>">
+                                            <i class="fa-solid fa-trash px-1"></i>Delete
+                                          </a>
+                                        </li>
+                                      </ul>
 
-      // SQL query to retrieve all cars
-      $sql = "SELECT * FROM car_list";
-      $result = $conn->query($sql);
+                                    </div>
+                                  </td>
+                                </tr>
+                                <?php
+                              }
+                            } else {
+                              echo '<p>No car details found.</p>';
+                            }
+                          }
 
-      if ($result === false) {
-        // If query fails, display error message
-        echo "Error: " . $conn->error;
-      } else {
-        if ($result->num_rows > 0) {
-          while ($row = $result->fetch_assoc()) { ?>
-            <tr>
-              <td><strong><?php echo $row['id']; ?></strong></td> <!-- ID in bold -->
-              <td><?php echo $row['car_model']; ?></td>
-              <td><?php echo $row['car_year']; ?></td>
-              <td><?php echo $row['max_people']; ?></td>
-              <td><?php echo $row['car_kmpl']; ?></td>
-              <td><?php echo $row['status']; ?></td>
-              <td><?php echo $row['costs']; ?></td>
-              <td>
-                <!-- Action buttons -->
-                <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Action
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item dp-edit" href="#"><i class="fa-solid fa-pen-to-square px-1"></i>Edit</a></li>
-                    <li><a class="dropdown-item dp-delete" href="#"><i class="fa-solid fa-trash px-1"></i>Delete</a></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-          <?php
-          }
-        } else {
-          echo '<p>No car details found.</p>';
-        }
-      }
-
-      $conn->close();
-      ?>
-    </tbody>
-  </table>
-</div>
+                          $conn->close();
+                          ?>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -303,7 +315,38 @@ if (!isset($_SESSION['username'])) {
       </section>
     </article>
   </main>
-<?php include "dependency/dependency_bottom.php" ?>
+  <?php include "dependency/dependency_bottom.php" ?>
+  <script>
+    document.querySelectorAll('.dp-delete').forEach(button => {
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const carId = this.getAttribute('data-id');
+
+        if (confirm('Are you sure you want to delete this car?')) {
+            fetch('delete_car.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ car_id: carId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Car deleted successfully!');
+                    location.reload(); // Refresh the page to reflect changes
+                } else {
+                    alert('Error deleting car: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An unexpected error occurred.');
+            });
+        }
+    });
+});
+
+  </script>
 </body>
 
 </html>
